@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 330" width="900" height="330" role="img" aria-label="Ejemplo de salida de delegar-gemini">
+<rect width="900" height="330" rx="12" fill="#14161c"/>
+<rect width="900" height="34" rx="12" fill="#232733"/>
+<circle cx="22" cy="17" r="6" fill="#ff5f56"/><circle cx="44" cy="17" r="6" fill="#ffbd2e"/><circle cx="66" cy="17" r="6" fill="#27c93f"/>
+<text x="450" y="22" text-anchor="middle" font-family="Consolas,Menlo,monospace" font-size="13" fill="#8b93a7">terminal</text>
+<text x="22" y="70" font-family="Consolas,Menlo,DejaVu Sans Mono,monospace" font-size="14" fill="#8be9fd" xml:space="preserve">$ delegar-gemini libre prompt.md --comprobar "test -s notas/resumen.md" --nombre "prueba real"</text>
+<text x="22" y="122" font-family="Consolas,Menlo,DejaVu Sans Mono,monospace" font-size="14" fill="#50fa7b" xml:space="preserve">=== VERIFICADO: prueba real (49 s) ===</text>
+<text x="22" y="148" font-family="Consolas,Menlo,DejaVu Sans Mono,monospace" font-size="14" fill="#8b93a7" xml:space="preserve">--- final de la respuesta de Gemini ---</text>
+<text x="22" y="174" font-family="Consolas,Menlo,DejaVu Sans Mono,monospace" font-size="14" fill="#e6e6e6" xml:space="preserve">He creado el archivo notas/resumen.md con el resumen de 3 líneas</text>
+<text x="22" y="200" font-family="Consolas,Menlo,DejaVu Sans Mono,monospace" font-size="14" fill="#e6e6e6" xml:space="preserve">a partir de docs/guia.md.</text>
+<text x="22" y="252" font-family="Consolas,Menlo,DejaVu Sans Mono,monospace" font-size="14" fill="#e6e6e6" xml:space="preserve">listo</text>
+<text x="22" y="304" font-family="Consolas,Menlo,DejaVu Sans Mono,monospace" font-size="14" fill="#8b93a7" xml:space="preserve">Registro: ~/.local/share/delegar-gemini/2026-11-07-0139-prueba-real.md</text>
+</svg>

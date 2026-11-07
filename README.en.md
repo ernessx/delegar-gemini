@@ -4,6 +4,8 @@
 
 A Claude Code skill plus a small script that lets Claude **delegate routine tasks to Gemini** through the `agy` terminal (Antigravity CLI) using your Gemini subscription. Claude launches the task and only reads a short report with a verdict, instead of spending its own tokens on repetitive work.
 
+<p align="center"><img src="docs/flujo.en.svg" alt="Flow: Claude Code launches the task, delegar-gemini sends it to Gemini through agy, your check runs and the verdict is shown" width="900"></p>
+
 ## What it does
 The script:
 1. Sends your prompt to Gemini with `agy --model <model> -p <prompt>`.
@@ -40,6 +42,10 @@ delegar-gemini historial
 ```
 On Windows the check command cannot use `test`; for example `--comprobar "if exist notes\summary.md (exit 0) else (exit 1)"` in cmd, or a portable `python -c` one-liner.
 
+Example output (real run with `agy`):
+
+<p align="center"><img src="docs/ejemplo-terminal.svg" alt="Example output with a VERIFICADO verdict" width="900"></p>
+
 Optional env vars: `DELEGAR_AGY`, `DELEGAR_MODELO` (default `gemini-3.8-flash-high`), `DELEGAR_CWD`, `DELEGAR_SALIDA`, `DELEGAR_TIMEOUT`.
 
 ## Trust policy
@@ -53,10 +59,13 @@ Delegate: repetitive, bounded, command-verifiable tasks. Do not delegate: unclea
 The free Gemini API tier requires sharing your data with Google. The subscription via `agy` is the private channel.
 
 ## Known limitations / to verify
-- This is a generalized version of the author's original script, which also had recipes tied to personal infrastructure (not included). The generalized script **was tested against a real `agy` on Linux** (small task, VERIFICADO verdict).
+- This is a generalized version of the author's original script and **does not include their recipes**: each user creates their own with Gemini. The generalized script **was tested against a real `agy` on Linux** (small task, VERIFICADO verdict).
 - **Windows is untested.** The script is written to be cross-platform (paths, UTF-8, `agy.exe`/`agy.cmd`) but has **not been run on Windows** (Linux only so far); open an issue if something fails. Very long prompts may hit Windows' ~32,000-character command-line limit.
 - To verify: exact `agy` flags in your version (`agy --help`), available models, behavior with very large prompts, and the format of `agy`'s permission settings.
 - Checks are your responsibility; the script only runs the command you pass.
 
 ## License
 MIT, see `LICENSE`.
+
+## Credits
+Idea, direction and testing: Ernes ([@ernessx](https://github.com/ernessx)). Built in collaboration with Claude (Anthropic).

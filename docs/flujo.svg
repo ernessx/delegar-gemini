@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 270" width="900" height="270" role="img" aria-label="Cómo funciona delegar-gemini">
+<rect width="900" height="270" rx="14" fill="#0f1117"/>
+<text x="450" y="38" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="20" font-weight="700" fill="#ffffff">Cómo funciona delegar-gemini</text>
+<defs><marker id="f" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8b93a7"/></marker></defs>
+<rect x="15" y="75" width="150" height="100" rx="12" fill="#1b1f2a" stroke="#4cc9f0" stroke-width="2"/>
+<text x="90" y="115" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="16" font-weight="700" fill="#ffffff">Claude Code</text>
+<text x="90" y="145" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#b8c0d4">lanza la tarea</text>
+<line x1="167" y1="125" x2="191" y2="125" stroke="#8b93a7" stroke-width="2" marker-end="url(#f)"/>
+<rect x="195" y="75" width="150" height="100" rx="12" fill="#1b1f2a" stroke="#4cc9f0" stroke-width="2"/>
+<text x="270" y="115" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="16" font-weight="700" fill="#ffffff">delegar-gemini</text>
+<text x="270" y="145" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#b8c0d4">script + prompt</text>
+<line x1="347" y1="125" x2="371" y2="125" stroke="#8b93a7" stroke-width="2" marker-end="url(#f)"/>
+<rect x="375" y="75" width="150" height="100" rx="12" fill="#1b1f2a" stroke="#ff8a1f" stroke-width="2"/>
+<text x="450" y="115" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="16" font-weight="700" fill="#ffffff">agy · Gemini</text>
+<text x="450" y="145" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#b8c0d4">hace el trabajo</text>
+<line x1="527" y1="125" x2="551" y2="125" stroke="#8b93a7" stroke-width="2" marker-end="url(#f)"/>
+<rect x="555" y="75" width="150" height="100" rx="12" fill="#1b1f2a" stroke="#4cc9f0" stroke-width="2"/>
+<text x="630" y="115" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="16" font-weight="700" fill="#ffffff">Tu comprobación</text>
+<text x="630" y="145" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#b8c0d4">comando real</text>
+<line x1="707" y1="125" x2="731" y2="125" stroke="#8b93a7" stroke-width="2" marker-end="url(#f)"/>
+<rect x="735" y="75" width="150" height="100" rx="12" fill="#1b1f2a" stroke="#06d6a0" stroke-width="2"/>
+<text x="810" y="115" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="16" font-weight="700" fill="#ffffff">Veredicto</text>
+<text x="810" y="145" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#b8c0d4">VERIFICADO · FALLO</text>
+<text x="450" y="225" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="14" fill="#8b93a7">Claude solo lee el informe corto: no gasta sus tokens en el trabajo repetitivo.</text>
+</svg>

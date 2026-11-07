@@ -4,6 +4,8 @@
 
 Una skill de Claude Code y un script pequeno que permiten a Claude **delegar tareas rutinarias a Gemini** usando la terminal `agy` (Antigravity CLI) con tu suscripcion de Gemini. Claude lanza la tarea, y solo lee un informe corto con un veredicto, en vez de gastar sus propios tokens en trabajo repetitivo.
 
+<p align="center"><img src="docs/flujo.svg" alt="Flujo: Claude Code lanza la tarea, delegar-gemini la envia a Gemini por agy, se ejecuta tu comprobacion y se muestra el veredicto" width="900"></p>
+
 ## Para que sirve
 Cuando se te acaban los tokens de Claude, lo repetitivo y facil de verificar (documentar, resumir, buscar, generar configuracion con una herramienta tuya) no necesita su criterio. El script:
 1. Envia tu prompt a Gemini con `agy --model <modelo> -p <prompt>`.
@@ -47,6 +49,10 @@ delegar-gemini historial
 ```
 En Windows el comando de comprobacion no puede usar `test`; usa por ejemplo `--comprobar "if exist notas\resumen.md (exit 0) else (exit 1)"` en cmd, o algo portable como `--comprobar "python -c \"import os,sys;sys.exit(0 if os.path.getsize('notas/resumen.md') else 1)\""`.
 
+Salida de ejemplo (prueba real con `agy`):
+
+<p align="center"><img src="docs/ejemplo-terminal.svg" alt="Ejemplo de salida con veredicto VERIFICADO" width="900"></p>
+
 Variables opcionales: `DELEGAR_AGY`, `DELEGAR_MODELO` (por defecto `gemini-3.8-flash-high`), `DELEGAR_CWD`, `DELEGAR_SALIDA` (por defecto `~/.local/share/delegar-gemini`), `DELEGAR_TIMEOUT`.
 
 En Claude Code, la skill le indica a Claude cuando y como usarlo; puedes pedirle "delega esto a Gemini".
@@ -67,7 +73,7 @@ Reglas:
 La API gratuita de Gemini (tier gratis) exige compartir los datos con Google. La suscripcion usada via `agy` es el canal privado. Por eso este proyecto solo usa `agy`.
 
 ## Limitaciones conocidas
-- Es la version **generalizada** del script original del autor, que ademas traia recetas ligadas a su infraestructura (Zigbee/Home Assistant) que no se incluyen. Este script generalizado **se probo con `agy` real en Linux** (tarea pequena, veredicto VERIFICADO); la logica de lanzamiento (`agy --model M --print-timeout T -p PROMPT`) es la del original.
+- Es la version **generalizada** del script original del autor y **no incluye sus recetas**: cada usuario crea las suyas con Gemini. Este script generalizado **se probo con `agy` real en Linux** (tarea pequena, veredicto VERIFICADO); la logica de lanzamiento (`agy --model M --print-timeout T -p PROMPT`) es la del original.
 - **Windows: por verificar.** El script esta escrito para ser multiplataforma (rutas, codificacion UTF-8, `agy.exe`/`agy.cmd`), pero **no se ha probado en Windows** (solo en Linux). Si algo falla, abre un issue con el error. Los prompts muy largos pueden chocar con el limite de ~32 000 caracteres de la linea de comandos de Windows.
 - Por verificar: nombres exactos de las opciones de `agy` en tu version (`agy --help`) y modelos disponibles (`agy models`).
 - Por verificar: el comportamiento con archivos muy grandes en el prompt (el autor vio fallos con otro wrapper MCP, no con `agy` directo).
@@ -79,3 +85,6 @@ El original usaba recetas en Python: una funcion que arma el prompt y una funcio
 
 ## Licencia
 MIT, ver `LICENSE`.
+
+## Creditos
+Idea, direccion y pruebas: Ernes ([@ernessx](https://github.com/ernessx)). Desarrollado en colaboracion con Claude (Anthropic).
