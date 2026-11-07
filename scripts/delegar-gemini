@@ -1,0 +1,89 @@
+#!/usr/bin/env python3
+"""delegar-gemini (version generalizada): lanza una tarea a Gemini con `agy -p`, guarda prompt y respuesta,
+ejecuta (opcional) un comando de COMPROBACION tuyo contra el estado real y muestra un informe corto.
+
+  delegar-gemini libre ARCHIVO_PROMPT [--comprobar "COMANDO"] [--nombre ETIQUETA]
+  delegar-gemini historial
+
+El comando de --comprobar se ejecuta DESPUES de que Gemini termine; si sale con codigo 0 el veredicto es VERIFICADO,
+si no, FALLO LA COMPROBACION. Sin --comprobar el veredicto es SIN COMPROBACION AUTOMATICA (revisar a mano).
+
+Variables de entorno (todas opcionales):
+  DELEGAR_AGY      ruta del binario agy            (por defecto: el "agy" del PATH; en Windows agy.exe/agy.cmd)
+  DELEGAR_MODELO   modelo                          (por defecto: gemini-3.8-flash-high)
+  DELEGAR_CWD      carpeta de trabajo de Gemini    (por defecto: carpeta actual)
+  DELEGAR_SALIDA   donde guardar el registro       (por defecto: ~/.local/share/delegar-gemini; en Windows %LOCALAPPDATA%\\delegar-gemini)
+  DELEGAR_TIMEOUT  segundos maximos                (por defecto: 720)
+"""
+import os, re, shutil, subprocess, sys, time
+
+# Windows: agy suele ser agy.exe o agy.cmd; shutil.which respeta PATHEXT y devuelve la ruta completa.
+AGY = os.environ.get("DELEGAR_AGY") or shutil.which("agy") or "agy"
+MODELO = os.environ.get("DELEGAR_MODELO", "gemini-3.8-flash-high")
+CWD = os.environ.get("DELEGAR_CWD", os.getcwd())
+_BASE = os.environ.get("LOCALAPPDATA") if os.name == "nt" else os.path.expanduser("~/.local/share")
+SALIDA = os.environ.get("DELEGAR_SALIDA", os.path.join(_BASE or os.path.expanduser("~"), "delegar-gemini"))
+TIMEOUT = int(os.environ.get("DELEGAR_TIMEOUT", "720"))
+INDICE = os.path.join(SALIDA, "INDEX.md")
+
+
+def opcion(a, nombre, defecto=None):
+    return a[a.index(nombre) + 1] if nombre in a and a.index(nombre) + 1 < len(a) else defecto
+
+
+def slug(s):
+    return re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")[:25] or "tarea"
+
+
+def main():
+    # Consola de Windows (cp1252): evita errores al imprimir acentos o simbolos de la respuesta de Gemini.
+    for flujo in (sys.stdout, sys.stderr):
+        try:
+            flujo.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
+    a = sys.argv[1:]
+    if not a or a[0] not in ("libre", "historial"):
+        print(__doc__)
+        sys.exit(0 if not a else 1)
+    if a[0] == "historial":
+        try:
+            print("".join(open(INDICE, encoding="utf-8").readlines()[-15:]))
+        except OSError:
+            print("(aun no hay delegaciones)")
+        return
+    if len(a) < 2:
+        sys.exit("Falta el archivo de prompt")
+    prompt = open(a[1], encoding="utf-8").read()
+    comprobar = opcion(a, "--comprobar")
+    etiqueta = opcion(a, "--nombre", os.path.basename(a[1]))
+    os.makedirs(SALIDA, exist_ok=True)
+    t0 = time.time()
+    try:
+        r = subprocess.run([AGY, "--model", MODELO, "--print-timeout", f"{TIMEOUT - 60}s", "-p", prompt],
+                           capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=TIMEOUT, cwd=CWD)
+        salida = (r.stdout + r.stderr).strip()
+    except FileNotFoundError:
+        sys.exit(f"No encuentro '{AGY}'. Instala agy (Antigravity CLI) o indica su ruta con DELEGAR_AGY=<RUTA>/agy")
+    except subprocess.TimeoutExpired:
+        salida = "(TIMEOUT: Gemini no termino a tiempo)"
+    dur = int(time.time() - t0)
+    ok = None
+    if comprobar:
+        # shell=True: es TU comando (funciona igual en cmd/PowerShell y en bash). En Windows no existe `test`: usa `if exist` o python -c.
+        ok = subprocess.run(comprobar, shell=True, cwd=CWD).returncode == 0
+    veredicto = "VERIFICADO" if ok else ("SIN COMPROBACION AUTOMATICA" if ok is None else "FALLO LA COMPROBACION")
+    ts = time.strftime("%Y-%m-%d-%H%M")
+    arch = f"{ts}-{slug(etiqueta)}.md"
+    with open(os.path.join(SALIDA, arch), "w", encoding="utf-8") as f:
+        f.write(f"# {etiqueta} ({ts}, {dur} s, {MODELO})\n\nVeredicto: {veredicto}\n\n"
+                f"## Prompt enviado\n```\n{prompt}\n```\n\n## Respuesta de Gemini\n```\n{salida}\n```\n")
+    with open(INDICE, "a", encoding="utf-8") as f:
+        f.write(f"- {ts} | {etiqueta} | {veredicto} | {arch}\n")
+    print(f"=== {veredicto}: {etiqueta} ({dur} s) ===\n--- final de la respuesta de Gemini ---")
+    print("\n".join(salida.splitlines()[-9:])[:1500])
+    print(f"\nRegistro: {os.path.join(SALIDA, arch)}")
+    sys.exit(0 if ok in (True, None) else 1)
+
+
+main()
