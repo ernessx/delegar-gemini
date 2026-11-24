@@ -53,7 +53,7 @@ Salida de ejemplo (prueba real con `agy`):
 
 <p align="center"><img src="docs/ejemplo-terminal.svg" alt="Ejemplo de salida con veredicto VERIFICADO" width="900"></p>
 
-Variables opcionales: `DELEGAR_AGY`, `DELEGAR_MODELO` (por defecto `gemini-3.8-flash-high`), `DELEGAR_CWD`, `DELEGAR_SALIDA` (por defecto `~/.local/share/delegar-gemini`), `DELEGAR_TIMEOUT`.
+Variables opcionales: `DELEGAR_AGY`, `DELEGAR_MODELO` (por defecto `Gemini 4 Hydrogen (Medium)`), `DELEGAR_CWD`, `DELEGAR_SALIDA` (por defecto `~/.local/share/delegar-gemini`), `DELEGAR_TIMEOUT`.
 
 En Claude Code, la skill le indica a Claude cuando y como usarlo; puedes pedirle "delega esto a Gemini".
 

@@ -46,7 +46,7 @@ Example output (real run with `agy`):
 
 <p align="center"><img src="docs/ejemplo-terminal.svg" alt="Example output with a VERIFICADO verdict" width="900"></p>
 
-Optional env vars: `DELEGAR_AGY`, `DELEGAR_MODELO` (default `gemini-3.8-flash-high`), `DELEGAR_CWD`, `DELEGAR_SALIDA`, `DELEGAR_TIMEOUT`.
+Optional env vars: `DELEGAR_AGY`, `DELEGAR_MODELO` (default `Gemini 4 Hydrogen (Medium)`), `DELEGAR_CWD`, `DELEGAR_SALIDA`, `DELEGAR_TIMEOUT`.
 
 ## Trust policy
 Delegate: repetitive, bounded, command-verifiable tasks. Do not delegate: unclear-cause diagnosis, wiring/safety, design decisions, purchases, infrastructure changes, anything risky.

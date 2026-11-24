@@ -10,7 +10,7 @@ si no, FALLO LA COMPROBACION. Sin --comprobar el veredicto es SIN COMPROBACION A
 
 Variables de entorno (todas opcionales):
   DELEGAR_AGY      ruta del binario agy            (por defecto: el "agy" del PATH; en Windows agy.exe/agy.cmd)
-  DELEGAR_MODELO   modelo                          (por defecto: gemini-3.8-flash-high)
+  DELEGAR_MODELO   modelo                          (por defecto: Gemini 4 Hydrogen (Medium))
   DELEGAR_CWD      carpeta de trabajo de Gemini    (por defecto: carpeta actual)
   DELEGAR_SALIDA   donde guardar el registro       (por defecto: ~/.local/share/delegar-gemini; en Windows %LOCALAPPDATA%\\delegar-gemini)
   DELEGAR_TIMEOUT  segundos maximos                (por defecto: 720)
@@ -19,7 +19,7 @@ import os, re, shutil, subprocess, sys, time
 
 # Windows: agy suele ser agy.exe o agy.cmd; shutil.which respeta PATHEXT y devuelve la ruta completa.
 AGY = os.environ.get("DELEGAR_AGY") or shutil.which("agy") or "agy"
-MODELO = os.environ.get("DELEGAR_MODELO", "gemini-3.8-flash-high")
+MODELO = os.environ.get("DELEGAR_MODELO", "Gemini 4 Hydrogen (Medium)")
 CWD = os.environ.get("DELEGAR_CWD", os.getcwd())
 _BASE = os.environ.get("LOCALAPPDATA") if os.name == "nt" else os.path.expanduser("~/.local/share")
 SALIDA = os.environ.get("DELEGAR_SALIDA", os.path.join(_BASE or os.path.expanduser("~"), "delegar-gemini"))
